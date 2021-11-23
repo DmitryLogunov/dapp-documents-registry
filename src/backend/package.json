@@ -9,7 +9,8 @@
     "prebuild": "rimraf dist",
     "build": "/bin/bash ./build",
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
-    "start": "node ./dist/applications/api/main.js",
+    "start:api": "node ./dist/applications/json-api/main.js",
+    "start:rpc": "node ./dist/applications/json-rpc/main.js",
     "lint": "eslint ",
     "typeorm": "ts-node -r tsconfig-paths/register --project tsconfig.json ./node_modules/typeorm/cli.js --config ormconfig.js",
     "typeorm:generate": "npm run typeorm migration:generate -- -n",
@@ -17,8 +18,9 @@
     "typeorm:run": "npm run typeorm migration:run",
     "typeorm:revert": "npm run typeorm migration:revert",
     "db:seed": "ts-node -r tsconfig-paths/register --project tsconfig.json ./node_modules/typeorm-seeding/dist/cli.js seed -n ormconfig.js"
-    },
+  },
   "dependencies": {
+    "@jashkasoft/nestjs-json-rpc": "^7.6.0",
     "@nestjs/common": "^7.6.5",
     "@nestjs/config": "^0.6.3",
     "@nestjs/core": "^7.0.0",

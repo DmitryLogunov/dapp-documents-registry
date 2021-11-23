@@ -1,7 +1,5 @@
 import {
   Column,
-  JoinTable,
-  ManyToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn

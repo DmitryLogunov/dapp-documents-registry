@@ -15,8 +15,8 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   const options = new DocumentBuilder()
-    .setTitle('Finances Application API')
-    .setDescription('Finances Application API')
+    .setTitle('Dapp Documents Registry JSON-API')
+    .setDescription('Dapp Documents Registry JSON-API')
     .setVersion('1.0')
     .addTag('API')
     .addBearerAuth(
@@ -34,6 +34,6 @@ async function bootstrap() {
   const port = process.env.HTTP_PORT || 3000;
   await app.listen(port);
 
-  logger.log(`Finances Application API service started on http://0.0.0.0:${port}`);
+  logger.log(`Dapp Documents Registry JSON-API service started on http://0.0.0.0:${port}`);
 }
 bootstrap();

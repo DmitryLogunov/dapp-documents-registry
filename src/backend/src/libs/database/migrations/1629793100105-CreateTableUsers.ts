@@ -2,7 +2,7 @@ import {
   MigrationInterface,
   QueryRunner,
   TableColumn,
-  Table, TableForeignKey
+  Table
 } from "typeorm";
 
 export class CreateTableUsers1629793100105 implements MigrationInterface {
