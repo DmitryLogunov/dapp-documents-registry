@@ -1,0 +1,28 @@
+.homePage {
+    height: 60px;
+    padding-left: 60px;
+    background: url('/img/logo.png');
+    background-repeat: no-repeat;
+}
+
+.homePage > h1 {
+    position: relative;
+    top: 5px;
+}
+
+img.logout {
+    width: 30px;
+    position: absolute;
+    right: 100px;
+    cursor: pointer;
+}
+
+.accountAddress  {
+    text-shadow: none;
+    font-size: 0.6em;
+    position: absolute;
+    right: 150px;
+    top: 5px;
+    color: #4a3939;
+    font-weight: 40;
+}

@@ -1,0 +1,84 @@
+version: '3.7'
+
+services:
+  ethereum-bootnode:
+    hostname: ethereum-bootnode
+    env_file:
+      - .env
+    image: ethereum-node
+    build:
+      context: .
+      dockerfile: ./Dockerfile.ethereum-node
+      args:
+        - ACCOUNT_PASSWORD=${ACCOUNT_PASSWORD_1}
+    command:
+      --nodekeyhex="b0ac22adcad37213c7c565810a50f1772291e7b0ce53fb73e7ec2a3c75bc13b5"
+      --nodiscover
+      --ipcdisable
+      --networkid=${NETWORK_ID}
+      --netrestrict="172.16.254.0/28"
+    networks:
+      private-ethereum-network:
+
+  ethereum-web3-bootnode-console:
+    hostname: ethereum-web3-bootnode-console
+    env_file:
+      - .env
+    image: ethereum-node
+    entrypoint: ["/bin/sh", "-ce", "tail -f /dev/null"]
+    depends_on:
+      - ethereum-bootnode
+    networks:
+      private-ethereum-network:
+    volumes:
+      - ethereum-bootnode-storage:/root/.ethereum
+      - ./web3-geth-console:/console
+
+  ethereum-rpc-node:
+    hostname: ethereum-rpc-node
+    env_file:
+      - .env
+    image: ethereum-node
+    depends_on:
+      - ethereum-bootnode
+    command:
+      --bootnodes="enode://af22c29c316ad069cf48a09a4ad5cf04a251b411e45098888d114c6dd7f489a13786620d5953738762afa13711d4ffb3b19aa5de772d8af72f851f7e9c5b164a@ethereum-bootnode:30303"
+      --allow-insecure-unlock
+      --http
+      --http.addr="0.0.0.0"
+      --http.api="eth,web3,net,admin,personal"
+      --http.corsdomain="*"
+      --networkid=${NETWORK_ID}
+      --netrestrict="172.16.254.0/28"
+    ports:
+      - "8545:8545"
+    networks:
+      private-ethereum-network:
+    volumes:
+      - ethereum-bootnode-storage:/root/.ethereum
+
+  ethereum-miner-node:
+    hostname: ethereum-miner-node
+    env_file:
+      - .env
+    image: ethereum-node
+    depends_on:
+      - ethereum-bootnode
+    command:
+      --bootnodes="enode://af22c29c316ad069cf48a09a4ad5cf04a251b411e45098888d114c6dd7f489a13786620d5953738762afa13711d4ffb3b19aa5de772d8af72f851f7e9c5b164a@ethereum-bootnode:30303"
+      --mine
+      --miner.threads=1
+      --networkid=${NETWORK_ID}
+      --netrestrict="172.16.254.0/28"
+    networks:
+      private-ethereum-network:
+
+networks:
+  private-ethereum-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.254.0/28
+
+volumes:
+  ethereum-bootnode-storage:

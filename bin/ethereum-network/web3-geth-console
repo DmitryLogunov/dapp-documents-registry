@@ -1,0 +1,3 @@
+#! /bin/bash
+
+geth --networkid ${NETWORK_ID} --datadir /root/.ethereum attach ipc:/root/.ethereum/geth.ipc

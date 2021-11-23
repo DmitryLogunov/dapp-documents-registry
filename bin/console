@@ -1,0 +1,3 @@
+#! /bin/bash
+
+( cd ./ethereum-network && docker-compose exec ethereum-web3-bootnode-console /bin/sh ./console )
