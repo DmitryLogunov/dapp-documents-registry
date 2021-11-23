@@ -1,4 +1,4 @@
-#Dapp Documents Registry
+# Dapp Documents Registry
 
 ## The sample of a decentralized application
 
