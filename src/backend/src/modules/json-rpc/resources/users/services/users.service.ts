@@ -1,15 +1,18 @@
 import {Injectable, NotFoundException} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
+import {JwtService} from '@nestjs/jwt';
 import {Repository} from "typeorm";
 
 import {UsersEntity} from "@/libs/database/entities";
 import {randomString} from "@/libs/common/helpers/random.helpers";
+import {UsersStatusTypes} from "@/libs/database/types/users-status.types";
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(UsersEntity)
-    protected usersRepository: Repository<UsersEntity>) {
+    private usersRepository: Repository<UsersEntity>,
+    private jwtService: JwtService) {
   }
 
   /**
@@ -28,19 +31,12 @@ export class UsersService {
 
     user.accountAddress = accountAddress;
     user.nonce = randomString(10);
+    user.status = UsersStatusTypes.Active;
 
     await this.usersRepository.save(user);
 
-    return user;
-  }
+    console.log(user);
 
-  /**
-   * Checks signature and returns JWT auth token in case of success
-   *
-   * @param accountAddress
-   * @param signature
-   */
-  public async authenticate(accountAddress: string, signature: string): Promise<{accessToken: string|null}> {
-    return;
+    return user;
   }
 }

@@ -13,7 +13,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
 
   public async createTypeOrmOptions(): Promise<TypeOrmModuleOptions> {
     return {
-      ...this.configService.get<ConnectionOptions>('protek-database'),
+      ...this.configService.get<ConnectionOptions>('dapp-docs-registry-database'),
       entities: Object.values(entities)
     };
   }

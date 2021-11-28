@@ -1,7 +1,14 @@
 export type TokenType = {
-  accessToken: string,
-  userId: number,
-  isActive: boolean
+  accessToken: string;
+  email: string;
+  accountAddress: string;
+}
+
+export type AuthenticationUserData = {
+  username?: string;
+  password?: string;
+  accountAddress?: string;
+  signature?: string;
 }
 
 export type ValidationPayloadType = {

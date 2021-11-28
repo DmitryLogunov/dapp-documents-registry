@@ -9,6 +9,7 @@ import {LoggingModule} from "@/libs/logging/logging.module";
 import {AppLoggerMiddleware} from "@/libs/logging/middlewares/app-logger.middleware";
 
 import {JsonRpcResourcesModule} from "@/modules/json-rpc/json-rpc.module";
+import {AuthenticationModule} from "@/modules/authentication/authentication.module";
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import {JsonRpcResourcesModule} from "@/modules/json-rpc/json-rpc.module";
     JsonRpcModule.forRoot({
       path: '/rpc',
     }),
+    AuthenticationModule,
     JsonRpcResourcesModule
   ],
   providers: [

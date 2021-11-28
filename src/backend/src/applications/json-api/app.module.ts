@@ -13,7 +13,7 @@ import {JsonApiModule} from "@/modules/json-api/json-api.module";
 @Module({
   imports: [
     DatabaseModule,
-    LoggingModule.forRoot({serviceName: 'Protek Manufacture\'s Cabinet API'}),
+    LoggingModule.forRoot({serviceName: 'Dapp Document Registry\'s Cabinet API'}),
     AuthenticationModule,
     JsonApiModule,
   ],

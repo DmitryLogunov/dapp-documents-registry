@@ -3,7 +3,7 @@ import { registerAs } from '@nestjs/config';
 
 import { ConnectionOptions } from './types/connection.type';
 
-export default registerAs('protek-database', (): ConnectionOptions => ({
+export default registerAs('dapp-docs-registry-database', (): ConnectionOptions => ({
   type: 'postgres',
   host: process.env.POSTGRES_HOST,
   port: parseInt(process.env.POSTGRES_PORT, 10),

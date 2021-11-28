@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Cookies from "js-cookie";
 import {Redirect} from "react-router-dom";
 
-const authTokenCookieName = '__dapp-docs-registry-token__';
+const accessTokenCookieName = '__dapp-docs-registry-access-token__';
 const accountAddressCookieName = '__dapp-docs-registry-public-address__';
 
 class Index extends Component {
@@ -10,13 +10,15 @@ class Index extends Component {
     super(props);
 
     this.state = {
-      authToken: Cookies.get(authTokenCookieName),
+      accessToken: Cookies.get(accessTokenCookieName),
       accountAddress: Cookies.get(accountAddressCookieName)
     };
   }
 
   render() {
-    if (typeof this.state.authToken === 'undefined' || this.state.authToken === 'null') {
+    if (!this.state.accessToken ||
+        typeof this.state.accessToken === 'undefined' ||
+        this.state.accessToken === 'null') {
       return <Redirect to='/login'/>;
     }
 
@@ -34,7 +36,7 @@ class Index extends Component {
   }
 
   logout() {
-    Cookies.set(authTokenCookieName, null);
+    Cookies.set(accessTokenCookieName, null);
     Cookies.set(accountAddressCookieName, '');
     window.location.href = '/login';
   }

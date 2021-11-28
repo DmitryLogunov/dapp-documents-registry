@@ -6,6 +6,8 @@ import * as requestIp from 'request-ip';
 import { AppModule } from './app.module';
 import { LoggingService } from "@/libs/logging/services/logging.service";
 
+const cors = require('cors');
+
 require('dotenv').config(); // eslint-disable-line @typescript-eslint/no-var-requires
 
 async function bootstrap() {
@@ -30,6 +32,8 @@ async function bootstrap() {
 
   app.use(requestIp.mw());
   app.use(compression());
+
+  app.use(cors({origin: '*'}));
 
   const port = process.env.BACKEND_HTTP_API_PORT || 3000;
   await app.listen(port);

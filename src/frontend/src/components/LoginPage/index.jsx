@@ -2,9 +2,12 @@ import Cookies from "js-cookie";
 import React, { Component } from "react";
 import {Redirect} from 'react-router-dom';
 const Web3 = require('web3');
+import {v4 as uuidv4} from 'uuid';
 
-const authTokenCookieName = '__dapp-docs-registry-token__';
+const accessTokenCookieName = '__dapp-docs-registry-access-token__';
 const accountAddressCookieName = '__dapp-docs-registry-public-address__';
+
+const axios = require('axios').default;
 
 let web3 = undefined;
 
@@ -12,10 +15,16 @@ class Login extends Component {
   constructor(props) {
     super(props);
 
+    const backendScheme = process.env.REACT_APP_BACKEND_URI_SCHEME;
+    const backendRPCHost = process.env.REACT_APP_BACKEND_HOST_NAME_RPC;
+    this.backendRPCUrl = `${backendScheme}://${backendRPCHost}/rpc`;
+    this.blockchainSignupPhrasePrefix = process.env.REACT_APP_BLOCKCHAIN_SIGNUP_PHRASE_PREFIX;
+
     this.state = {
-      authToken: Cookies.get(authTokenCookieName),
+      accessToken: Cookies.get(accessTokenCookieName),
       accountAddress: Cookies.get(accountAddressCookieName),
-      checkAuth: true
+      checkAuth: true,
+      noticeInfo: null
     };
 
     (async () => {
@@ -27,7 +36,9 @@ class Login extends Component {
    * Main rendering
    */
   render() {
-    if (typeof this.state.authToken !== 'undefined' && this.state.authToken !== 'null') {
+    if (this.state.accessToken &&
+        typeof this.state.accessToken !== 'undefined' &&
+        this.state.accessToken !== 'null') {
        return <Redirect to='/'/>;
     }
 
@@ -41,7 +52,8 @@ class Login extends Component {
             <div className="loginTitle">Login via Metamask</div>
             <div className="loginFormAccountAddress">Account address: {this.state.accountAddress}</div>
           </div>
-          { !this.state.checkAuth ? <div className="authErrorNotice">Could not verify Ethereum address</div> : null }
+          <div className="authErrorNotice" style={{display: !this.state.checkAuth? '': 'none'}}>Error: verifying Ethereum address failed!</div>
+          <div className="noticeInfo" style={{display: this.state.noticeInfo ? '': 'none'}}>{this.state.noticeInfo}</div>
           <button type="button" className="button buttonBlue"  onClick={this.handleSignIn.bind(this)}>Sign in
             <div className="ripples buttonRipples"><span className="ripplesCircle"></span></div>
           </button>
@@ -81,7 +93,7 @@ class Login extends Component {
   async handleSignIn() {
     const accountAddress = this.state.accountAddress;
 
-    const user = await this.getUser(accountAddress) || await this.createUser(accountAddress);
+    const user = await this.getOrCreateUser(accountAddress);
     if (!user) {
       alert('Could not get or create user');
       return;
@@ -90,37 +102,35 @@ class Login extends Component {
     const {nonce} = user;
 
     const signature = await this.handleSignMessage(accountAddress, nonce);
-    const authToken = await this.handleAuthenticate(accountAddress, signature);
+    if (!signature) return;
 
-    if (authToken) {
-      Cookies.set(authTokenCookieName, authToken);
-      Cookies.set(accountAddressCookieName, accountAddress);
-      window.location.href = '/';
-    } else {
-      Cookies.set(authTokenCookieName, null);
-      Cookies.set(accountAddressCookieName, '');
+    const accessToken = await this.handleAuthenticate(accountAddress, signature);
+    this.refreshAccessToken(accessToken);
+  }
+
+  /**
+   * Returns user via API if it exists in DB or creates new user via API
+   *
+   * @param accountAddress
+   * @returns {Promise<{accountAddress, nonce: string}>}
+   */
+  async getOrCreateUser(address) {
+    const jsonRpcID = uuidv4();
+    const body = {
+      jsonrpc: "2.0",
+      method: "users.getOrCreate",
+      id: jsonRpcID,
+      params: { accountAddress: address }
+    };
+
+    const response = await axios.post(this.backendRPCUrl, body);
+    const {accountAddress, nonce} = (response.data && response.data.result) || {};
+
+    if (!nonce) {
       this.setState({checkAuth: false});
     }
-  }
 
-  /**
-   * Returns user via API if it exists in DB
-   *
-   * @param accountAddress
-   * @returns {Promise<{accountAddress, nonce: string}>}
-   */
-  async getUser(accountAddress) {
-    return {accountAddress, nonce: '3r84ch34134784f8ffg13g'};
-  }
-
-  /**
-   * Creates new user via API
-   *
-   * @param accountAddress
-   * @returns {Promise<{accountAddress, nonce: string}>}
-   */
-  async createUser(accountAddress) {
-    return {accountAddress, nonce: '3r84ch34134784f8ffg13g'};
+    return {accountAddress, nonce};
   }
 
   /**
@@ -131,17 +141,61 @@ class Login extends Component {
    * @returns {Promise<signature: string>}
    */
   async handleSignMessage(accountAddress, nonce) {
-    const signature =
-      await web3.eth.personal.sign(
-        `Sign up random nonce: ${nonce}`,
-        accountAddress,
-        '');
+    if (!nonce) return;
+
+    this.setState({checkAuth: true});
+    this.setState({noticeInfo: `To authenticate you should sign up in Metamask the random nonce: ${nonce}`});
+
+    let signature;
+    try {
+      signature =
+        await web3.eth.personal.sign(
+          `${this.blockchainSignupPhrasePrefix} ${nonce} `,
+          accountAddress,
+          '');
+    } catch (e) {
+      this.setState({noticeInfo: null});
+      this.setState({checkAuth: false});
+      throw e;
+    }
 
     return signature;
   }
 
-  async handleAuthenticate(accountAddress, signature) {
-    return 'some-access-token';
+  /**
+   * The handler of authentication with blockchain accountAddress and signature
+   *
+   * @param address
+   * @param signature
+   * @returns {Promise<*>}
+   */
+  async handleAuthenticate(address, signature) {
+    const jsonRpcID = uuidv4();
+    const body = {
+      jsonrpc: "2.0",
+      method: "authentication.login",
+      id: jsonRpcID,
+      params: { accountAddress: address, signature }
+    };
+
+    const response = await axios.post(this.backendRPCUrl, body);
+    const {accessToken} = (response.data && response.data.result) || {};
+
+    return accessToken;
+  }
+
+  refreshAccessToken(accessToken) {
+    const accountAddress = this.state.accountAddress;
+    if (accessToken) {
+      Cookies.set(accessTokenCookieName, accessToken);
+      Cookies.set(accountAddressCookieName, accountAddress);
+      window.location.href = '/';
+      return;
+    }
+
+    Cookies.set(accessTokenCookieName, null);
+    Cookies.set(accountAddressCookieName, '');
+    this.setState({checkAuth: false});
   }
 }
 

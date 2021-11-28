@@ -8,6 +8,7 @@ import {
 import {ApiEntity,ApiColumn} from "@/libs/database/decorators";
 import {UsersStatusTypes} from "@/libs/database/types/users-status.types";
 import {UsersProfilesEntity} from "@/libs/database/entities/users-profiles.entity";
+import {PasswordsEntity} from "@/libs/database/entities/passwords.entity";
 
 
 @ApiEntity({
@@ -151,4 +152,16 @@ export class UsersEntity {
     }
   })
   public profile: UsersProfilesEntity
+
+  @OneToOne(() => PasswordsEntity, password => password.user)
+  @ApiColumn({
+    name: 'passwords',
+    isRelation: true,
+    methods: {
+      getCollection: "Получить пароль пользователя",
+      update: "Обновить/установить пароль пользователя (привязать пароль к пользователю)",
+      delete: "Удалить пароль пользователя (удалить привязку пароля к пользователю)"
+    }
+  })
+  public password: PasswordsEntity;
 }

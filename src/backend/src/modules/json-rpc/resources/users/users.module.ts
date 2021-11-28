@@ -6,11 +6,17 @@ import {LoggingModule} from "@/libs/logging/logging.module";
 
 import {UsersHandler} from "./handlers/users.handler";
 import {UsersService} from "./services/users.service";
+import {JwtModule} from "@nestjs/jwt";
+import {jwtConstants} from "@/modules/authentication/constants";
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([UsersEntity]),
     LoggingModule.forRoot({serviceName: 'Users RPC module'}),
+    JwtModule.register({
+      secret: jwtConstants.secret,
+      signOptions: {expiresIn: '12h'},
+    })
   ],
   providers: [UsersHandler, UsersService],
   exports: [UsersService]

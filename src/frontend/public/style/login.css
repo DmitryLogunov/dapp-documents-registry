@@ -43,6 +43,14 @@ form {
 	line-height: 30px;
 }
 
+.noticeInfo {
+	color: #4e5609;
+	margin-bottom: 5px;
+	position: relative;
+	top: -10px;
+	font-size: 1em;
+}
+
 .group { 
 	position: relative; 
 	margin-bottom: 45px;
@@ -277,7 +285,7 @@ footer img:focus , footer a:focus { outline: none; }
 .authErrorNotice {
 	color: red;
 	font-weight: bold;
-	width: 300px;
+	width: 400px;
 	text-align: center;
 	display: block;
 	position: relative;

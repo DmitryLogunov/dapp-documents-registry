@@ -3,6 +3,7 @@ import {NestFactory} from '@nestjs/core';
 import * as requestIp from 'request-ip';
 import {AppModule} from './app.module';
 import {LoggingService} from "@/libs/logging/services/logging.service";
+const cors = require('cors');
 
 require('dotenv').config(); // eslint-disable-line @typescript-eslint/no-var-requires
 
@@ -12,6 +13,8 @@ async function bootstrap() {
 
   app.setGlobalPrefix('rpc');
   app.use(requestIp.mw());
+
+  app.use(cors({origin: '*'}));
 
   const port = process.env.BACKEND_HTTP_RPC_PORT || 3001;
   await app.listen(port);
