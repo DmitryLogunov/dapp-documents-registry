@@ -1,7 +1,9 @@
-import {Injectable} from "@nestjs/common";
+import {Injectable, NotFoundException} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
-import {UsersEntity} from "@/libs/database/entities";
 import {Repository} from "typeorm";
+
+import {UsersEntity} from "@/libs/database/entities";
+import {randomString} from "@/libs/common/helpers/random.helpers";
 
 @Injectable()
 export class UsersService {
@@ -16,7 +18,20 @@ export class UsersService {
    * @param accountAddress
    */
   public async getOrCreate(accountAddress: string): Promise<UsersEntity> {
-    return;
+    if (!accountAddress) {
+      throw new NotFoundException();
+    }
+
+    const user =
+      await this.usersRepository.findOne({accountAddress}) ||
+      new UsersEntity();
+
+    user.accountAddress = accountAddress;
+    user.nonce = randomString(10);
+
+    await this.usersRepository.save(user);
+
+    return user;
   }
 
   /**

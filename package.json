@@ -10,6 +10,7 @@
     "database:start": "(cd ./bin/postrges-database && docker-compose up -d)",
     "database:stop": "(cd ./bin/postrges-database && docker-compose down)",
     "backend:dev:start:api": "(cd ./src/backend && yarn start:api)",
+    "backend:dev:start:rpc": "(cd ./src/backend && yarn start:rpc)",
     "frontend:dev:start": "(cd ./src/frontend && yarn start)"
   }
 }

@@ -28,3 +28,16 @@ export function shuffleArray<T>(array: Array<T>): Array<T> {
 
   return array;
 }
+
+export function randomString(length: number): string {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() *
+      charactersLength));
+  }
+
+  return result;
+}

@@ -32,18 +32,19 @@ export class CreateTableUsers1629793100105 implements MigrationInterface {
             name: 'accountAddress',
             type: 'varchar',
             length: '128',
-            isNullable: false
+            isNullable: false,
+            isUnique: true
           }),
           new TableColumn({
             name: 'email',
             type: 'varchar',
             length: '128',
-            isNullable: false
+            isNullable: true
           }),
           new TableColumn({
             name: 'status',
             type: 'users_status_types',
-            isNullable: false
+            isNullable: true
           }),
           new TableColumn({
             name: 'lastActivity',
@@ -55,7 +56,7 @@ export class CreateTableUsers1629793100105 implements MigrationInterface {
             name: 'nonce',
             type: 'varchar',
             length: '128',
-            isNullable: false
+            isNullable: true
           }),
           new TableColumn({
             name: 'createdAt',
