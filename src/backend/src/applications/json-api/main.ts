@@ -31,7 +31,7 @@ async function bootstrap() {
   app.use(requestIp.mw());
   app.use(compression());
 
-  const port = process.env.HTTP_PORT || 3000;
+  const port = process.env.BACKEND_HTTP_API_PORT || 3000;
   await app.listen(port);
 
   logger.log(`Dapp Documents Registry JSON-API service started on http://0.0.0.0:${port}`);

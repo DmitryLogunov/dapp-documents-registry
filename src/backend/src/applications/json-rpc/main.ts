@@ -13,7 +13,7 @@ async function bootstrap() {
   app.setGlobalPrefix('rpc');
   app.use(requestIp.mw());
 
-  const port = process.env.HTTP_PORT || 3000;
+  const port = process.env.BACKEND_HTTP_RPC_PORT || 3001;
   await app.listen(port);
 
   logger.log(`Dapp Documents Registry JSON-RPC service started on http://0.0.0.0:${port}`);
