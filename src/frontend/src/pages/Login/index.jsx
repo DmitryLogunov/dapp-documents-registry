@@ -11,7 +11,7 @@ const axios = require('axios').default;
 
 let web3 = undefined;
 
-class Login extends Component {
+class LoginPage extends Component {
   constructor(props) {
     super(props);
 
@@ -199,4 +199,6 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export const Login = () => (
+  <LoginPage />
+);

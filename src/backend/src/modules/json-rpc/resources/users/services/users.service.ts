@@ -1,6 +1,5 @@
 import {Injectable, NotFoundException} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
-import {JwtService} from '@nestjs/jwt';
 import {Repository} from "typeorm";
 
 import {UsersEntity} from "@/libs/database/entities";
@@ -11,8 +10,7 @@ import {UsersStatusTypes} from "@/libs/database/types/users-status.types";
 export class UsersService {
   constructor(
     @InjectRepository(UsersEntity)
-    private usersRepository: Repository<UsersEntity>,
-    private jwtService: JwtService) {
+    private usersRepository: Repository<UsersEntity>) {
   }
 
   /**

@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import Cookies from "js-cookie";
 import {Redirect} from "react-router-dom";
 
+import {Menu} from "../Menu";
+
 const accessTokenCookieName = '__dapp-docs-registry-access-token__';
 const accountAddressCookieName = '__dapp-docs-registry-public-address__';
 
-class Index extends Component {
+export class Header extends Component {
   constructor(props) {
     super(props);
 
@@ -24,13 +26,14 @@ class Index extends Component {
 
     return (
       <div>
-        <div className="homePage">
+        <div className="header">
           <h1>Dapp Documents Registry
             <span className="accountAddress">Account address: {this.state.accountAddress}</span>
              <img src="/img/logout.png" className="logout" onClick={this.logout.bind(this)}/>
           </h1>
         </div>
         <hr/>
+        <Menu />
       </div>
     );
   }
@@ -42,4 +45,3 @@ class Index extends Component {
   }
 }
 
-export default Index;
