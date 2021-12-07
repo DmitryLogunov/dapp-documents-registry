@@ -2,15 +2,9 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/utils/structs/EnumerableMap.sol";
-
-    struct Token {
-        uint256 tokenId;
-        string tokenURI;
-    }
 
 contract TokensRegistry is AccessControl, ERC721URIStorage, ERC721Enumerable {
     using Counters for Counters.Counter;
