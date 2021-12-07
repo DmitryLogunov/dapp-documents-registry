@@ -17,6 +17,7 @@ services:
       --ipcdisable
       --networkid=${NETWORK_ID}
       --netrestrict="172.16.254.0/28"
+      --rpc.txfeecap 0
     networks:
       private-ethereum-network:
 
@@ -34,30 +35,31 @@ services:
       - ethereum-bootnode-storage:/root/.ethereum
       - ./web3-geth-console:/console
 
-  ethereum-rpc-node:
-    hostname: ethereum-rpc-node
-    env_file:
-      - .env
-    image: ethereum-node
-    depends_on:
-      - ethereum-bootnode
-    command:
-      --bootnodes="enode://af22c29c316ad069cf48a09a4ad5cf04a251b411e45098888d114c6dd7f489a13786620d5953738762afa13711d4ffb3b19aa5de772d8af72f851f7e9c5b164a@ethereum-bootnode:30303"
-      --allow-insecure-unlock
-      --http
-      --http.addr="0.0.0.0"
-      --http.api="eth,web3,net,admin,personal"
-      --http.corsdomain="*"
-      --networkid=${NETWORK_ID}
-      --netrestrict="172.16.254.0/28"
-    ports:
-      - "8545:8545"
-    networks:
-      private-ethereum-network:
-    volumes:
-      - ethereum-bootnode-storage:/root/.ethereum
+#  ethereum-rpc-node:
+#    hostname: ethereum-rpc-node
+#    env_file:
+#      - .env
+#    image: ethereum-node
+#    depends_on:
+#      - ethereum-bootnode
+#    command:
+#      --bootnodes="enode://af22c29c316ad069cf48a09a4ad5cf04a251b411e45098888d114c6dd7f489a13786620d5953738762afa13711d4ffb3b19aa5de772d8af72f851f7e9c5b164a@ethereum-bootnode:30303"
+#      --allow-insecure-unlock
+#      --http
+#      --http.addr="0.0.0.0"
+#      --http.api="eth,web3,net,admin,personal"
+#      --http.corsdomain="*"
+#      --networkid=${NETWORK_ID}
+#      --netrestrict="172.16.254.0/28"
+#      --rpc.txfeecap 0
+#    ports:
+#      - "8545:8545"
+#    networks:
+#      private-ethereum-network:
+#    volumes:
+#      - ethereum-bootnode-storage:/root/.ethereum
 
-  ethereum-miner-node:
+  ethereum-miner-rpc-node:
     hostname: ethereum-miner-node
     env_file:
       - .env
@@ -70,8 +72,18 @@ services:
       --miner.threads=1
       --networkid=${NETWORK_ID}
       --netrestrict="172.16.254.0/28"
+      --allow-insecure-unlock
+      --http
+      --http.addr="0.0.0.0"
+      --http.api="eth,web3,net,admin,personal"
+      --http.corsdomain="*"
+      --rpc.txfeecap 0
+    ports:
+      - "8545:8545"
     networks:
       private-ethereum-network:
+    volumes:
+      - ethereum-bootnode-storage:/root/.ethereum
 
 networks:
   private-ethereum-network:

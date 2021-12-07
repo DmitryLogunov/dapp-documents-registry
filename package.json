@@ -7,6 +7,7 @@
     "ethereum:start": "(cd ./bin/ethereum-network && docker-compose up -d)",
     "ethereum:console": "(cd ./bin/ethereum-network && docker-compose exec ethereum-web3-bootnode-console /bin/sh ./console)",
     "ethereum:stop": "(cd ./bin/ethereum-network && docker-compose down)",
+    "ethereum:logs": "(cd ./bin/ethereum-network && docker-compose logs -f)",
     "database:start": "(cd ./bin/postrges-database && docker-compose up -d)",
     "database:stop": "(cd ./bin/postrges-database && docker-compose down)",
     "backend:dev:start:api": "(cd ./src/backend && yarn start:api)",
