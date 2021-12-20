@@ -1,0 +1,17 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Dapp Documents Registry JSON-RPC"
+  },
+  "host": "http://0.0.0.0:3001",
+  "basePath": "/rpc",
+  "tags": [],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {},
+  "securityDefinitions": {},
+  "definitions": {},
+  "externalDocs": {}
+}

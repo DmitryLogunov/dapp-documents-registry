@@ -1,0 +1,309 @@
+{
+  "tags": [
+    {
+      "name": "Tokens"
+    }
+  ],
+  "paths": {
+    "tokens.getTokensNumber": {
+      "post": {
+        "tags": [
+          "Tokens"
+        ],
+        "summary": "Получить число токенов в контракте",
+        "description": "",
+        "operationId": "tokens.getTokensNumber",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Tokens_GetTokensNumber_ResponseDto"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "tokens.getAccountTokens": {
+      "post": {
+        "tags": [
+          "Tokens"
+        ],
+        "summary": "Получить токены аккаунта",
+        "description": "",
+        "operationId": "tokens.getAccountTokens",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Tokens_GetAccountTokens_PayloadDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Tokens_GetAccountTokens_ResponseDto"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "tokens.createToken": {
+      "post": {
+        "tags": [
+          "Tokens"
+        ],
+        "summary": "Создать токен и передать его аккаунту",
+        "description": "",
+        "operationId": "tokens.createToken",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Tokens_CreateToken_PayloadDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Tokens_CreateToken_ResponseDto"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "tokens.transferToken": {
+      "post": {
+        "tags": [
+          "Tokens"
+        ],
+        "summary": "Передуть токен между аккаунтами",
+        "description": "",
+        "operationId": "tokens.transferToken",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Token_TransferToken_PayloadDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Tokens_GetTokensNumber_ResponseDto": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "example": "BigNumber"
+        },
+        "hex": {
+          "type": "string",
+          "example": "0x03"
+        }
+      }
+    },
+    "Tokens_GetAccountTokens_PayloadDto": {
+      "type": "object",
+      "properties": {
+        "accountAddress": {
+          "type": "string",
+          "required": true,
+          "example": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
+        }
+      }
+    },
+    "Tokens_GetAccountTokens_ResponseDto": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "accountTokenIndex": {
+            "type": "number",
+            "example": 1
+          },
+          "tokenId": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "example": "BigNumber"
+              },
+              "hex": {
+                "type": "string",
+                "example": "0x03"
+              }
+            }
+          },
+          "metadataURI": {
+            "type": "string",
+            "example": "http://some.path.url/metadata.json"
+          },
+          "tokenInfo": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "Tokens_CreateToken_PayloadDto": {
+      "type": "object",
+      "properties": {
+        "ownerAddress": {
+          "type": "string",
+          "required": true,
+          "example": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
+        },
+        "metadataURI": {
+          "type": "string",
+          "example": "http://some.path.url/metadata.json"
+        }
+      }
+    },
+    "Tokens_CreateToken_ResponseDto": {
+      "type": "object",
+      "properties": {
+        "hash": {
+          "type": "string",
+          "example": "0x478bde763d8fac43ace963c26948cd5d331b71aee208d265896243c7cb290263"
+        },
+        "type": {
+          "type": "number",
+          "example": 2
+        },
+        "blockHash": {
+          "type": "string",
+          "example": "0x859a699b5d47f8d8eb0ba4cab0978f0b5e6a22855bacecd861ddda827016147d"
+        },
+        "from": {
+          "type": "string",
+          "example": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+        },
+        "gasPrice": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "BigNumber"
+            },
+            "hex": {
+              "type": "string",
+              "example": "0x65180520"
+            }
+          }
+        }
+      }
+    },
+    "Token_TransferToken_PayloadDto": {
+      "type": "object",
+      "properties": {
+        "fromAccountAddress": {
+          "type": "string",
+          "required": true,
+          "example": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
+        },
+        "toAccountAddress": {
+          "type": "string",
+          "required": true,
+          "example": "0x90f79bf6eb2c4f870365e785982e1f101e93b906"
+        },
+        "tokenIndex": {
+          "type": "int",
+          "required": true,
+          "example": 1
+        }
+      }
+    }
+  }
+}

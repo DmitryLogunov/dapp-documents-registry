@@ -14,13 +14,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const logger = await app.resolve(LoggingService);
 
-  app.setGlobalPrefix('api');
-
   const options = new DocumentBuilder()
     .setTitle('Dapp Documents Registry JSON-API')
     .setDescription('Dapp Documents Registry JSON-API')
     .setVersion('1.0')
-    .addTag('API')
     .addBearerAuth(
       { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
       'JWT',
