@@ -1,4 +1,4 @@
-# Dapp Documents Registry
+# NFT Oracle
 
 ## The sample of a decentralized application
 
