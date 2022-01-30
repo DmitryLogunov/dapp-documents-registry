@@ -35,7 +35,7 @@ services:
     networks:
       - nft-oracle-local-net
     env_file:
-      - .env
+      - ../.env
     volumes:
       - .env:/usr/src/app/.env
     ports:
