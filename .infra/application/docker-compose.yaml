@@ -7,7 +7,7 @@ services:
     networks:
       - nft-oracle-local-net
     volumes:
-      - .env:/usr/src/app/.env
+      - ../../src/backend/.env:/usr/src/app/.env
     environment:
       - HTTP_PORT=${BACKEND_HTTP_API_PORT}
     ports:
@@ -21,7 +21,7 @@ services:
     networks:
       - nft-oracle-local-net
     volumes:
-      - .env:/usr/src/app/.env
+      - ../../src/backend.env:/usr/src/app/.env
     environment:
       - HTTP_PORT=${BACKEND_HTTP_RPC_PORT}
     ports:
@@ -35,9 +35,9 @@ services:
     networks:
       - nft-oracle-local-net
     env_file:
-      - ../.env
+      - ../../src/frontend/.env
     volumes:
-      - .env:/usr/src/app/.env
+      - ../../src/frontend/.env:/usr/src/app/.env
     ports:
       - 4000:8000
     command: [ "yarn", "start" ]
