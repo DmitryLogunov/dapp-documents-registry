@@ -15,8 +15,8 @@ async function bootstrap() {
   const logger = await app.resolve(LoggingService);
 
   const options = new DocumentBuilder()
-    .setTitle('Dapp Documents Registry JSON-API')
-    .setDescription('Dapp Documents Registry JSON-API')
+    .setTitle('NFT Oracles Registry JSON-API')
+    .setDescription('NFT Oracles Registry JSON-API')
     .setVersion('1.0')
     .addBearerAuth(
       { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
@@ -35,6 +35,6 @@ async function bootstrap() {
   const port = process.env.BACKEND_HTTP_API_PORT || 3000;
   await app.listen(port);
 
-  logger.log(`Dapp Documents Registry JSON-API service started on http://0.0.0.0:${port}`);
+  logger.log(`NFT Oracles Registry JSON-API service started on http://0.0.0.0:${port}`);
 }
 bootstrap();

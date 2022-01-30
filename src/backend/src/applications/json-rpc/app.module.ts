@@ -14,7 +14,7 @@ import {AuthenticationModule} from "@/modules/authentication/authentication.modu
 @Module({
   imports: [
     DatabaseModule,
-    LoggingModule.forRoot({serviceName: 'Dapp Documents Registry API'}),
+    LoggingModule.forRoot({serviceName: 'NFT Oracles Registry API'}),
     JsonRpcModule.forRoot({
       path: '/rpc',
     }),

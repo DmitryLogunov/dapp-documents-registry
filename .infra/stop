@@ -2,4 +2,5 @@
 
 docker-compose -f ./application/docker-compose.yaml down
 docker-compose -f ./postrges-database/docker-compose.db.yaml down
+docker-compose -f ./postrges-database/docker-compose.migrations.yaml down
 docker-compose -f ./blockchain/hardhat-test-network/docker-compose.yaml down

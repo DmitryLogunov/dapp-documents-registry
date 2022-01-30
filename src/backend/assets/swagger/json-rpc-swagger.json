@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Dapp Documents Registry JSON-RPC"
+    "title": "NFT Oracles Registry JSON-RPC"
   },
   "host": "http://0.0.0.0:3001",
   "basePath": "/rpc",

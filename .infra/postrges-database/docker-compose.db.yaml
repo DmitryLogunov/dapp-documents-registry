@@ -28,7 +28,6 @@ services:
       - db-net
     environment:
       - PGADMIN_DEFAULT_PASSWORD=password
-      - PGADMIN_DEFAULT_EMAIL=pg.admin@email.com
     volumes:
       - pgadmin:/root/.pgadmin
     ports:

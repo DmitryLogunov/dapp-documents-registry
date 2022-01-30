@@ -35,7 +35,7 @@ async function bootstrap() {
   const port = process.env.BACKEND_HTTP_RPC_PORT || 3001;
   await app.listen(port);
 
-  logger.log(`Dapp Documents Registry JSON-RPC service started on http://0.0.0.0:${port}`);
+  logger.log(`NFT Oracles Registry JSON-RPC service started on http://0.0.0.0:${port}`);
 }
 
 bootstrap();

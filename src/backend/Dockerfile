@@ -17,7 +17,7 @@ COPY jest-e2e.js ./jest-e2e.js
 COPY nest-cli.json ./nest-cli.json
 COPY .eslintrc.json ./.eslintrc.json
 COPY ormconfig.js ./ormconfig.js
-COPY hardhat.config.js ./hardhat.config.js.local-test-node
+COPY hardhat.config.js ./hardhat.config.js
 COPY build ./build
 
 RUN yarn build --production
