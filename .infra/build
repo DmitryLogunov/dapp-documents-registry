@@ -1,0 +1,73 @@
+#! /bin/sh
+
+if [[ "${1}"  == "" ]]; then
+  echo " Error: The first parameter <OPERAND> is required"
+  exit 1
+fi
+
+if [[ "${1}" == "--help" ]]; then
+    echo " --> build <OPERAND> [<ROOT_DIR>]"
+    echo "      <OPERAND> - required, possible values:--help | app | backend | frontend | blockchain "
+    echo "      <ROOT_DIR> - optional: root path of project"
+   exit 1
+fi
+
+if [[ "${ROOT_DIR}" == "" ]]; then
+  if [[ "${2}" != "" ]]; then
+    ${ROOT_DIR} = ${2}
+  fi
+  if [[ "${ROOT_DIR}" == "" ]]; then
+    ROOT_DIR=$(cd .. && pwd)
+  fi
+fi
+
+echo " --> OPERAND: ${1}"
+echo " --> ROOT_DIR: ${ROOT_DIR}"
+echo ""
+while true; do
+  read -p " --> Check <OPERAND> and <ROOT_DIR> environment. Is it true? [Y/N]:  " yn
+    case $yn in
+        [Yy]* ) break;;
+        [Nn]* ) echo "   .... Please set true ROOT_DIR"; exit;;
+        * ) echo "   .... Please answer yes [Y] or no [N].";;
+    esac
+done
+
+echo ""
+
+if [[ "${1}" == "backend" ]]; then
+  echo " --> Building NFT-oracle Backend docker image ....."
+
+  ( cd ${ROOT_DIR}/src/backend &&  docker build -t nft-oracle.backend . )
+
+  exit
+fi
+
+if [[ "${1}" == "frontend" ]]; then
+  echo " --> Building NFT-oracle Frontend docker image ....."
+
+  ( cd ${ROOT_DIR}/src/frontend &&  docker build -t nft-oracle.frontend . )
+
+  exit
+fi
+
+if [[ "${1}" == "blockchain" ]]; then
+  echo " --> Building NFT-oracle Blockchain docker image ....."
+
+  ( cd ${ROOT_DIR}/src/blockchain &&  docker build -t nft-oracle.blockchain . )
+
+  exit
+fi
+
+if [[ "${1}" == "all" ]]; then
+  echo " --> Building NFT-oracle Backend docker image ....."
+  ( cd ${ROOT_DIR}/src/blockchain &&  docker build -t nft-oracle.blockchain . )
+
+  echo " --> Building NFT-oracle Frontend docker image ....."
+  ( cd ${ROOT_DIR}/src/frontend &&  docker build -t nft-oracle.frontend . )
+
+  echo " --> Building NFT-oracle Blockchain docker image ....."
+  ( cd ${ROOT_DIR}/src/blockchain &&  docker build -t nft-oracle.blockchain . )
+
+  exit
+fi

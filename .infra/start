@@ -12,20 +12,21 @@ if [[ "${1}" == "migrations" ]]; then
 
   docker-compose -f ./postrges-database/docker-compose.migrations.yaml up -d
   docker-compose -f ./postrges-database/docker-compose.migrations.yaml logs db-run-migrations
+  docker-compose -f ./postrges-database/docker-compose.migrations.yaml down
   exit
 fi
 
 if [[ "${1}" == "blockchain" ]]; then
   echo " Starting blockchain ....."
 
-   docker-compose -f ./blockchain/hardhat-test-network/docker-compose.yaml up -d
+  docker-compose -f ./blockchain/hardhat-test-network/docker-compose.yaml up -d
   exit
 fi
 
 if [[ "${1}" == "app" ]]; then
   echo " Run Application ....."
 
-  docker-compose -f ./docker-compose.yaml up -d
+  docker-compose -f ./application/docker-compose.yaml up -d
   exit
 fi
 
