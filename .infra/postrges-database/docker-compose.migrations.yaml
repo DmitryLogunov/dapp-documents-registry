@@ -7,7 +7,7 @@ services:
     networks:
       - nft-oracle-local-net
     volumes:
-      - ../.env:/usr/src/app/.env
+      -  ../../src/backend/.env:/usr/src/app/.env
     command: [ "yarn", "typeorm:run" ]
 
 networks:

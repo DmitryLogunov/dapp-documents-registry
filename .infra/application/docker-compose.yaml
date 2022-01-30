@@ -21,7 +21,7 @@ services:
     networks:
       - nft-oracle-local-net
     volumes:
-      - ../../src/backend.env:/usr/src/app/.env
+      - ../../src/backend/.env:/usr/src/app/.env
     environment:
       - HTTP_PORT=${BACKEND_HTTP_RPC_PORT}
     ports:
