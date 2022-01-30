@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  backend-json-rpc:
+    container_name: 'nft-oracle-backend-json-rpc'
+    image: 'nft-oracle.backend'
+    hostname: backend-json-rpc
+    networks:
+      - nft-oracle-local-net
+    volumes:
+      - .env:/usr/src/app/.env
+    ports:
+      - '9000:3000'
+      - '9001:4000'
+    command: [ "node", "./dist/applications/json-rpc/main.js" ]
+
+networks:
+  localstack-net:
+    external: false
+    driver: bridge
+    name: nft-oracle-local-net

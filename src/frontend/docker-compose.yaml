@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  nft-oracle-frontend:
+    container_name: 'nft-oracle-frontend'
+    image: 'nft-oracle.frontend'
+    hostname: nft-oracle-frontend
+    networks:
+      - nft-oracle-local-net
+    env_file:
+      - .env
+    volumes:
+      - .env:/usr/src/app/.env
+    ports:
+      - 4000:8000
+    command: [ "yarn", "start" ]
+
+networks:
+  localstack-net:
+    external: false
+    driver: bridge
+    name: nft-oracle-local-net
