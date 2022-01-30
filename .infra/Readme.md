@@ -18,11 +18,13 @@
   See .infra/postgres-database/init-data
 
 2.3 Run migrations
+  
   2.3.1 Configure .env file for backend application (copy from .env.example and set up)
   ```
     cp src/backend/.env.example src/backend/.env
   ``` 
-  2.3.1 Run migrations in docker container
+  
+  2.3.2 Run migrations in docker container
   ```
     cd .infra && start migrations
   ``` 
@@ -33,6 +35,7 @@
 ```
   cp src/blockchain/.env.example src/blockchain/.env
 ```
+  
   3.2 Start blockchain node and container for Contract deploing
 ```
   cd .infra && start blockchain
