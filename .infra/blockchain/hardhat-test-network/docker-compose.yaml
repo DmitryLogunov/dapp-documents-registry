@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  nft-oracle-hardhat-test-node:
+    container_name: 'nft-oracle-hardhat-test-node'
+    image: 'nft-oracle.blockchain'
+    hostname: nft-oracle-hardhat-test-node
+    networks:
+      - nft-oracle-local-net
+    volumes:
+      - ../../.env:/usr/src/app/.env
+    environment:
+      - ETHEREUM_RPC_PROVIDER_URL=http://127.0.0.1:8545
+    ports:
+      - '8545:8545'
+    command: [ "yarn", "test-node:start" ]
+
+  nft-oracle-contract-deploy:
+    container_name: 'nft-oracle-contract-deploy'
+    image: 'nft-oracle.blockchain'
+    hostname: nft-oracle-contract-deploy
+    networks:
+      - nft-oracle-local-net
+    volumes:
+      - ../../.env:/usr/src/app/.env
+    environment:
+     - ETHEREUM_RPC_PROVIDER_URL=http://nft-oracle-hardhat-test-node:8545
+    command: [ "/bin/sh", "-ce", "tail -f /dev/null" ]
+
+networks:
+  nft-oracle-local-net:
+    external: false
+    driver: bridge
+    name: nft-oracle-local-net

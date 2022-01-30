@@ -7,8 +7,8 @@ services:
       - .env
     image: ethereum-node-1
     build:
-      context: .
-      dockerfile: ./Dockerfile.ethereum-node
+      context: ""
+      dockerfile: Dockerfile.ethereum-node
       args:
         - ACCOUNT_PASSWORD=${ACCOUNT_PASSWORD_1}
     command:
@@ -26,8 +26,8 @@ services:
       - .env
     image: ethereum-node-2
     build:
-      context: .
-      dockerfile: ./Dockerfile.ethereum-node
+      context: ""
+      dockerfile: Dockerfile.ethereum-node
       args:
         - ACCOUNT_PASSWORD_2=${ACCOUNT_PASSWORD_2}
     command:

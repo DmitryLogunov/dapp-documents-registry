@@ -2,6 +2,8 @@ const {resolve} = require("path");
 const fs = require('fs');
 const Web3 = require('web3');
 
+require('dotenv').config({path: `${process.cwd()}/.env`});
+
 const ethereumRpcProviderURL = process.env.ETHEREUM_RPC_PROVIDER_URL;
 const web3 = new Web3(new Web3.providers.HttpProvider(ethereumRpcProviderURL));
 
@@ -27,7 +29,7 @@ const adminAccount = process.env.ADMIN_ACCOUNT;
       from: adminAccount, gas: gasEstimation, data: bytecode });
 
   contractObject
-    .deploy({data: bytecode, arguments: ['Hello solidity']})
+    .deploy({data: bytecode, arguments: ['TokensRegistry']})
     .send({from: adminAccount, gas: 10000000, gasPrice: 1000000000})
     .on('error', (error) => {
       console.log('[event] [onError] Error: ' + error)

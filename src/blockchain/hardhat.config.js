@@ -1,27 +1,24 @@
 require("@nomiclabs/hardhat-waffle");
 
-// This is a sample Hardhat task. To learn how to create your own go to
-// https://hardhat.org/guides/create-task.html
-task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
-  const accounts = await hre.ethers.getSigners();
+require('dotenv').config({path: `${process.cwd()}/.env`});
 
-  for (const account of accounts) {
-    console.log(account.address);
-  }
-});
-
-// You need to export an object to set up your config
-// Go to https://hardhat.org/config/ to learn more
+const blockchainRPCProviderURL = process.env.ETHEREUM_RPC_PROVIDER_URL;
+const adminAccountPrivateKey = process.env.BSC_ADMIN_ACCOUNT_PRIVATE_KEY;
+const networkID = parseInt(process.env.NETWORK_ID, 10);
+const gasPrice = parseInt(process.env.GAS_PRICE, 10);
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
   solidity: "0.8.4",
-  defaultNetwork: "localGethNetwork",
+  defaultNetwork: "appNet",
   networks: {
-    localGethNetwork: {
-      url: "http://127.0.0.1:8545"
+    appNet: {
+      url: blockchainRPCProviderURL,
+      chainId: networkID,
+      gasPrice: gasPrice,
+      accounts: adminAccountPrivateKey && [`0x${adminAccountPrivateKey}`]
     }
   }
 };

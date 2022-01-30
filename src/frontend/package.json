@@ -18,7 +18,7 @@
     "react-scripts": "^4.0.1"
   },
   "scripts": {
-    "start": "PORT=8080 react-scripts start",
+    "start": "PORT=${REACT_APP_FRONTEND_HTTP_PORT} react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

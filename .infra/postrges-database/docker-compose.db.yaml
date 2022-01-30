@@ -7,10 +7,13 @@ services:
     environment:
       - POSTGRES_PASSWORD=password
       - PGDATA=/data/postgres
+      - POSTGRES_DB=nft_oracle_database
+      - POSTGRES_USER=user
     networks:
       - db-net
     volumes:
-      - ./init/postgres-initialization.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./init-data/postgres-initialization.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./init-data/init:/docker-entrypoint-initdb.d/init
       - postgres:/data/postgres
     ports:
       - '5432:5432'
@@ -38,8 +41,8 @@ volumes:
 networks:
   db-net:
     driver: bridge
-    name: localstack-net
-  localstack-net:
+    name: nft-oracle-local-net
+  nft-oracle-local-net:
     external: false
     driver: bridge
-    name: localstack-net
+    name: nft-oracle-local-net
