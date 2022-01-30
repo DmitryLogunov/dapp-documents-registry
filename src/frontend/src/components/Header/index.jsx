@@ -27,7 +27,7 @@ export class Header extends Component {
     return (
       <div>
         <div className="header">
-          <h1>Dapp Documents Registry
+          <h1>NFT Oracles Registry
             <span className="accountAddress">Account address: {this.state.accountAddress}</span>
              <img src="/img/logout.png" className="logout" onClick={this.logout.bind(this)}/>
           </h1>

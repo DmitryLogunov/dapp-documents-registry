@@ -45,7 +45,7 @@ class LoginPage extends Component {
     return (
       <div>
         <hgroup>
-          <h1>Dapp Documents Registry</h1>
+          <h1>NFT Oracles Registry</h1>
         </hgroup>
         <form>
           <div className="group">
