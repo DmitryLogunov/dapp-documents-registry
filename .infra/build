@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 if [[ "${1}"  == "" ]]; then
   echo " Error: The first parameter <OPERAND> is required"
@@ -61,7 +61,7 @@ fi
 
 if [[ "${1}" == "all" ]]; then
   echo " --> Building NFT-oracle Backend docker image ....."
-  ( cd ${ROOT_DIR}/src/blockchain &&  docker build -t nft-oracle.blockchain . )
+  ( cd ${ROOT_DIR}/src/backend &&  docker build -t nft-oracle.backend . )
 
   echo " --> Building NFT-oracle Frontend docker image ....."
   ( cd ${ROOT_DIR}/src/frontend &&  docker build -t nft-oracle.frontend . )

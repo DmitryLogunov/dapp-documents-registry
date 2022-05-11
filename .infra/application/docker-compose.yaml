@@ -9,7 +9,7 @@ services:
     volumes:
       - ../../src/backend/.env:/usr/src/app/.env
     environment:
-      - HTTP_PORT=${BACKEND_HTTP_API_PORT}
+      - HTTP_PORT=${BACKEND_HTTP_API_PORT
     ports:
       - 9000:3000
     command: [ "node", "./dist/applications/json-api/main.js" ]
@@ -39,7 +39,7 @@ services:
     volumes:
       - ../../src/frontend/.env:/usr/src/app/.env
     ports:
-      - 4000:8000
+      - 4000:8080
     command: [ "yarn", "start" ]
 
 networks:

@@ -1,6 +1,7 @@
 import Cookies from "js-cookie";
-import React, { Component } from "react";
+import React, {Component} from "react";
 import {Redirect} from 'react-router-dom';
+
 const Web3 = require('web3');
 import {v4 as uuidv4} from 'uuid';
 
@@ -37,9 +38,9 @@ class LoginPage extends Component {
    */
   render() {
     if (this.state.accessToken &&
-        typeof this.state.accessToken !== 'undefined' &&
-        this.state.accessToken !== 'null') {
-       return <Redirect to='/'/>;
+      typeof this.state.accessToken !== 'undefined' &&
+      this.state.accessToken !== 'null') {
+      return <Redirect to='/'/>;
     }
 
     return (
@@ -52,9 +53,12 @@ class LoginPage extends Component {
             <div className="loginTitle">Login via Metamask</div>
             <div className="loginFormAccountAddress">Account address: {this.state.accountAddress}</div>
           </div>
-          <div className="authErrorNotice" style={{display: !this.state.checkAuth? '': 'none'}}>Error: verifying Ethereum address failed!</div>
-          <div className="noticeInfo" style={{display: this.state.noticeInfo ? '': 'none'}}>{this.state.noticeInfo}</div>
-          <button type="button" className="button buttonBlue"  onClick={this.handleSignIn.bind(this)}>Sign in
+          <div className="authErrorNotice" style={{display: !this.state.checkAuth ? '' : 'none'}}>Error: verifying
+            Ethereum address failed!
+          </div>
+          <div className="noticeInfo"
+               style={{display: this.state.noticeInfo ? '' : 'none'}}>{this.state.noticeInfo}</div>
+          <button type="button" className="button buttonBlue" onClick={this.handleSignIn.bind(this)}>Sign in
             <div className="ripples buttonRipples"><span className="ripplesCircle"></span></div>
           </button>
         </form>
@@ -87,6 +91,7 @@ class LoginPage extends Component {
     const accountAddress = coinbase.toLowerCase();
     this.setState({accountAddress});
   }
+
   /**
    * The handler of click
    */
@@ -120,7 +125,7 @@ class LoginPage extends Component {
       jsonrpc: "2.0",
       method: "users.getOrCreate",
       id: jsonRpcID,
-      params: { accountAddress: address }
+      params: {accountAddress: address}
     };
 
     const response = await axios.post(this.backendRPCUrl, body);
@@ -175,7 +180,7 @@ class LoginPage extends Component {
       jsonrpc: "2.0",
       method: "authentication.login",
       id: jsonRpcID,
-      params: { accountAddress: address, signature }
+      params: {accountAddress: address, signature}
     };
 
     const response = await axios.post(this.backendRPCUrl, body);
@@ -200,5 +205,5 @@ class LoginPage extends Component {
 }
 
 export const Login = () => (
-  <LoginPage />
+  <LoginPage/>
 );
